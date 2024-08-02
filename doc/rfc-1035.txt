@@ -618,6 +618,7 @@ RDATA           a variable length string of octets that describes the
                 resource.  The format of this information varies
                 according to the TYPE and CLASS of the resource record.
 
+[tag:type-values]
 3.2.2. TYPE values
 
 TYPE fields are used in resource records.  Note that these types are a
@@ -678,6 +679,7 @@ MAILA           254 A request for mail agent RRs (Obsolete - see MX)
 
 *               255 A request for all records
 
+[tag:class-values]
 3.2.4. CLASS values
 
 CLASS fields appear in resource records.  The following CLASS mnemonics
@@ -1398,6 +1400,7 @@ Mockapetris                                                    [Page 25]
 RFC 1035        Domain Implementation and Specification    November 1987
 
 
+# [tag:header-section-format]
 4.1.1. Header section format
 
 The header contains the following fields:
@@ -1420,7 +1423,8 @@ The header contains the following fields:
 
 where:
 
-ID              A 16 bit identifier assigned by the program that
+ID              [tag:header-id]
+                A 16 bit identifier assigned by the program that
                 generates any kind of query.  This identifier is copied
                 the corresponding reply and can be used by the requester
                 to match up replies to outstanding queries.
