@@ -1,10 +1,5 @@
 (ns dns-resolver.core
-  (:import [java.nio ByteBuffer]
-           [java.util BitSet]))
-
-(let [bit-set (BitSet. 8)]
-  (.set bit-set 7)
-  (.toByteArray bit-set))
+  (:import [java.nio ByteBuffer]))
 
 (def type-values
   "A map of TYPES to their values and meanings.
@@ -27,7 +22,8 @@
 (defn generate-query-header
   "Generate a query header for a DNS query.
    For more info about the format see [ref:header-section-format]."
-  [{:keys [id recursion-desired?]}]
+  [{:keys [id recursion-desired?]
+    :or {recursion-desired? true}}]
   (let [buffer (ByteBuffer/allocate 12)
         flags (if recursion-desired? 0x0100 0x0000)]
     (.putShort buffer id) ;;ID

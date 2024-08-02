@@ -1,7 +1,16 @@
 (ns dns-resolver.core-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [deftest is testing]]
             [dns-resolver.core :as sut]))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+(deftest generate-query-header-test
+  (testing "When recursion-desired? is false"
+    (is (= (vec (byte-array [0 1 0 0 0 1 0 0 0 0 0 0]))
+           (vec (sut/generate-query-header {:id 1 :recursion-desired? false})))))
+
+  (testing "When recursion-desired? is true"
+    (is (= (vec (byte-array [0 1 1 0 0 1 0 0 0 0 0 0]))
+           (vec (sut/generate-query-header {:id 1 :recursion-desired? true})))))
+
+  (testing "By default recursion-desired? is true"
+    (is (= (vec (byte-array [0 1 1 0 0 1 0 0 0 0 0 0]))
+           (vec (sut/generate-query-header {:id 1}))))))
