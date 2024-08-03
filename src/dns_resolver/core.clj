@@ -1,4 +1,6 @@
-(ns dns-resolver.core)
+(ns dns-resolver.core
+  (:require [clojure.string :as str])
+  (:import [java.nio ByteBuffer]))
 
 (def type-values
   "A map of TYPES to their values and meanings.
@@ -52,3 +54,17 @@
     (write-unsigned-16 array 8 0) ;; NSCOUNT
     (write-unsigned-16 array 10 0) ;; ARCOUNT
     array))
+
+(defn compress-domain-name
+  "Encode a DNS message.
+   For more info see [ref:message-compression]."
+  [domain-name]
+  (let [labels (str/split domain-name #"\.")
+        buffer (ByteBuffer/allocate (+ (count labels) ;; ach label has a length byte
+                                       (apply + (map count labels)) ;; the length of each label
+                                       1))] ;; end delimiter which is a 0 byte
+    (doseq [label labels]
+      (.put buffer (byte (count label)))
+      (.put buffer (.getBytes label)))
+    (.put buffer (byte 0))
+    (.array buffer)))

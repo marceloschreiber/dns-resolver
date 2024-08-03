@@ -1636,6 +1636,7 @@ RDATA           a variable length string of octets that describes the
                 For example, the if the TYPE is A and the CLASS is IN,
                 the RDATA field is a 4 octet ARPA Internet address.
 
+[tag:message-compression]
 4.1.4. Message compression
 
 In order to reduce the size of messages, the domain system utilizes a

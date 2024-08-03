@@ -71,3 +71,25 @@
               0 0 ;; ARCOUNT
               ]
              (into [] header))))))
+
+(deftest compress-domain-name-test
+  (testing "Compression of google.com"
+    (let [compressed (sut/compress-domain-name "google.com")]
+      (is (= (str "06" ;; length of 'google'
+                  "67" ;; g
+                  "6F" ;; o
+                  "6F" ;; o
+                  "67" ;; g
+                  "6C" ;; l
+                  "65" ;; e
+                  "03" ;; length of 'com'
+                  "63" ;; c
+                  "6F" ;; o
+                  "6D" ;; m
+                  "00") ;; end of domain name
+             (sut/unsigned-bytes->hex compressed)))))
+
+  (testing "Compression of marcelofernandes.dev"
+    (let [compressed (sut/compress-domain-name "marcelofernandes.dev")]
+      (is (= "106D617263656C6F6665726E616E6465730364657600"
+             (sut/unsigned-bytes->hex compressed))))))
