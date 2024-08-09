@@ -98,7 +98,7 @@
 
 (defn generate-question-section
   "Generate a question section for a DNS query.
-   For more info see [ref:question-section]."
+   For more info see [ref:question-section-format]."
   [domain-name]
   (let [compressed-domain-name (compress-domain-name domain-name)
         type-and-class         (int-array 4)
