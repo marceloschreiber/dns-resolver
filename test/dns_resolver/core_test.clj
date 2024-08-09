@@ -93,3 +93,14 @@
     (let [compressed (sut/compress-domain-name "marcelofernandes.dev")]
       (is (= "106D617263656C6F6665726E616E6465730364657600"
              (sut/unsigned-bytes->hex compressed))))))
+
+(deftest generate-question-section-test
+  (testing "Generate question section for google.com"
+    (let [question (sut/generate-question-section "google.com")]
+      (is (= "06676F6F676C6503636F6D0000010001"
+             (sut/unsigned-bytes->hex question))))))
+
+(deftest generate-dns-query-test
+  (testing "Generate a DNS query for google.com"
+    (let [query (sut/generate-dns-query "google.com")]
+      (is (= 28 (-> query :query count))))))
